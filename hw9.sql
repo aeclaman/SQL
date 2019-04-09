@@ -128,13 +128,15 @@ f.film_id=i.film_id
 group by r.inventory_id
 order by count desc;
 
--- 7f. 
+-- 7f.
 select store.store_id, sum(amount) as total from payment
-inner join staff on
-payment.staff_id=staff.staff_id
+inner join rental on
+payment.rental_id = rental.rental_id
+inner join inventory on
+inventory.inventory_id=rental.inventory_id
 inner join store on 
-store.store_id=staff.store_id
-group by staff.store_id, payment.staff_id;
+store.store_id=inventory.store_id
+group by store.store_id;
 
 -- 7g. 
 select store.store_id, city.city, country.country
@@ -183,4 +185,3 @@ select * from top_five_genres;
 -- 8c. 
 drop view if exists top_five_genres;
  
-
